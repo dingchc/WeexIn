@@ -3,6 +3,7 @@ package com.library.weex;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXGlobalEventModule;
 import com.taobao.weex.WXSDKEngine;
@@ -45,6 +46,8 @@ public enum WeexController {
         if (application == null) {
             return;
         }
+
+        Fresco.initialize(application);
 
         File outputDir = application.getDir("weex", Context.MODE_PRIVATE);
 

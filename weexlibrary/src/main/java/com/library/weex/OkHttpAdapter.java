@@ -23,7 +23,7 @@ import okhttp3.Response;
 /**
  * @author Ding
  */
-public class OkHttpAdapter implements IWXHttpAdapter{
+public class OkHttpAdapter implements IWXHttpAdapter {
 
     private static final String METHOD_GET = "GET";
     private static final String METHOD_POST = "POST";
@@ -39,7 +39,7 @@ public class OkHttpAdapter implements IWXHttpAdapter{
         RequestListener requestListener = new RequestListener() {
             @Override
             public void onRequest(long consumed, long total, boolean done) {
-                if(Assert.checkNull(listener)){
+                if (Assert.checkNull(listener)) {
                     listener.onHttpUploadProgress((int) (consumed));
                 }
             }
@@ -48,7 +48,7 @@ public class OkHttpAdapter implements IWXHttpAdapter{
         final ResponseListener responseListener = new ResponseListener() {
             @Override
             public void onResponse(long consumed, long total, boolean done) {
-                if(Assert.checkNull(listener)){
+                if (Assert.checkNull(listener)) {
                     listener.onHttpResponseProgress((int) (consumed));
                 }
             }
@@ -64,12 +64,12 @@ public class OkHttpAdapter implements IWXHttpAdapter{
             }
         }).build();
 
-        if(METHOD_GET.equalsIgnoreCase(request.method)){
+        if (METHOD_GET.equalsIgnoreCase(request.method)) {
             Request okHttpRequest = new Request.Builder().url(request.url).build();
             client.newCall(okHttpRequest).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    if(Assert.checkNull(listener)){
+                    if (Assert.checkNull(listener)) {
                         WXResponse wxResponse = new WXResponse();
                         wxResponse.errorCode = String.valueOf(REQUEST_FAILURE);
                         wxResponse.statusCode = String.valueOf(REQUEST_FAILURE);
@@ -79,13 +79,13 @@ public class OkHttpAdapter implements IWXHttpAdapter{
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    if(Assert.checkNull(listener)){
+                    if (Assert.checkNull(listener)) {
 
                         WXResponse wxResponse = new WXResponse();
                         wxResponse.statusCode = String.valueOf(response.code());
-                        if(requestSuccess(Integer.parseInt(wxResponse.statusCode))){
+                        if (requestSuccess(Integer.parseInt(wxResponse.statusCode))) {
                             wxResponse.originalData = response.body().bytes();
-                        }else {
+                        } else {
                             wxResponse.errorCode = String.valueOf(response.code());
                             wxResponse.errorMsg = response.body().string();
                         }
@@ -94,16 +94,16 @@ public class OkHttpAdapter implements IWXHttpAdapter{
                     }
                 }
             });
-        }else if(METHOD_POST.equalsIgnoreCase(request.method)){
+        } else if (METHOD_POST.equalsIgnoreCase(request.method)) {
             Request okHttpRequest = new Request.Builder()
                     .url(request.url)
-                    .post(new IncrementaRequestBody(RequestBody.create(MediaType.parse(request.body),request.body),requestListener))
+                    .post(new IncrementaRequestBody(RequestBody.create(MediaType.parse(request.body), request.body), requestListener))
                     .build();
 
             client.newCall(okHttpRequest).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    if(Assert.checkNull(listener)){
+                    if (Assert.checkNull(listener)) {
                         WXResponse wxResponse = new WXResponse();
                         wxResponse.errorCode = String.valueOf(REQUEST_FAILURE);
                         wxResponse.statusCode = String.valueOf(REQUEST_FAILURE);
@@ -113,13 +113,13 @@ public class OkHttpAdapter implements IWXHttpAdapter{
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    if(Assert.checkNull(listener)){
+                    if (Assert.checkNull(listener)) {
 
                         WXResponse wxResponse = new WXResponse();
                         wxResponse.statusCode = String.valueOf(response.code());
-                        if(requestSuccess(Integer.parseInt(wxResponse.statusCode))){
+                        if (requestSuccess(Integer.parseInt(wxResponse.statusCode))) {
                             wxResponse.originalData = response.body().bytes();
-                        }else {
+                        } else {
                             wxResponse.errorCode = String.valueOf(response.code());
                             wxResponse.errorMsg = response.body().string();
                         }
@@ -140,7 +140,7 @@ public class OkHttpAdapter implements IWXHttpAdapter{
      */
     public interface ResponseListener {
 
-        void onResponse(long consumed,long total,boolean done);
+        void onResponse(long consumed, long total, boolean done);
     }
 
     /**
@@ -148,6 +148,6 @@ public class OkHttpAdapter implements IWXHttpAdapter{
      */
     public interface RequestListener {
 
-        void onRequest(long consumed,long total,boolean done);
+        void onRequest(long consumed, long total, boolean done);
     }
 }

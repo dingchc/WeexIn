@@ -79,8 +79,8 @@ public class FrescoImageAdapter implements IWXImgLoaderAdapter {
                         .setProgressiveRenderingEnabled(false)
                         .build();
 
-                if(view instanceof DraweeView){
-                    Log.d("FrescoImageAdapter","load: "+url);
+                if (view instanceof DraweeView) {
+                    Log.d("FrescoImageAdapter", "load: " + url);
                     ControllerListener controllerListener = new BaseControllerListener<ImageInfo>() {
                         @Override
                         public void onFinalImageSet(
@@ -103,7 +103,7 @@ public class FrescoImageAdapter implements IWXImgLoaderAdapter {
 
                         @Override
                         public void onIntermediateImageSet(String id, @Nullable ImageInfo imageInfo) {
-                            FLog.d("","Intermediate image received");
+                            FLog.d("", "Intermediate image received");
                         }
 
                         @Override
@@ -117,9 +117,9 @@ public class FrescoImageAdapter implements IWXImgLoaderAdapter {
                             .setUri(uri)
                             .setImageRequest(request)
                             .build();
-                    ((DraweeView)view).setController(controller);
+                    ((DraweeView) view).setController(controller);
 
-                }else {
+                } else {
                     ImagePipeline imagePipeline = Fresco.getImagePipeline();
                     DataSource<CloseableReference<CloseableImage>>
                             dataSource = imagePipeline.fetchDecodedImage(request, new Object());

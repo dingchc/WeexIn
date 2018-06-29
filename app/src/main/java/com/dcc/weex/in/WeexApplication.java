@@ -15,6 +15,7 @@ public class WeexApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+
         WeexController.INSTANCE.init(this);
 
     }

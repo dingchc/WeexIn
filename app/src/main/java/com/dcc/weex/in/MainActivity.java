@@ -32,15 +32,21 @@ public class MainActivity extends AppCompatActivity implements IWXRenderListener
 
         mInstance.registerRenderListener(this);
 
-        loadLocal();
+        loadUrl();
 
     }
 
+    /**
+     * 加载本地
+     */
     private void loadLocal() {
 
         mInstance.render(getPackageName(), WXFileUtils.loadAsset("index.js", this), null, null, -1, -1, WXRenderStrategy.APPEND_ASYNC );
     }
 
+    /**
+     * 加载远程
+     */
     private void loadUrl() {
 
         String JS_URL = "http://172.20.10.9:8081/dist/index.js";
