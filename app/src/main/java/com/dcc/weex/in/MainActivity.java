@@ -10,6 +10,9 @@ import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.common.WXRenderStrategy;
 import com.taobao.weex.utils.WXFileUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author Ding
@@ -29,7 +32,23 @@ public class MainActivity extends AppCompatActivity implements IWXRenderListener
 
         mInstance.registerRenderListener(this);
 
+        loadLocal();
+
+    }
+
+    private void loadLocal() {
+
         mInstance.render(getPackageName(), WXFileUtils.loadAsset("index.js", this), null, null, -1, -1, WXRenderStrategy.APPEND_ASYNC );
+    }
+
+    private void loadUrl() {
+
+        String JS_URL = "http://172.20.10.9:8081/dist/index.js";
+
+        Map<String, Object> options = new HashMap<>();
+        options.put(WXSDKInstance.BUNDLE_URL, JS_URL);
+
+        mInstance.renderByUrl(getPackageName(), JS_URL, options, null, -1, -1, WXRenderStrategy.APPEND_ONCE);
     }
 
     /**

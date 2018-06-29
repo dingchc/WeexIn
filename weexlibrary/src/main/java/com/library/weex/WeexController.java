@@ -50,7 +50,7 @@ public enum WeexController {
 
         WXSDKEngine.initialize(application, new InitConfig.Builder()
                 .setImgAdapter(new FrescoImageAdapter())
-                .setHttpAdapter(new OkHttpAdapter())
+//                .setHttpAdapter(new OkHttpAdapter())
                 .build());
 
 
